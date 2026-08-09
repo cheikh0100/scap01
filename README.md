@@ -2,6 +2,4 @@
 
 
 
-<!-- START CSV TABLE -->
-data.csv 
-<!-- END CSV TABLE -->
+<!-- START CSV TABLE --> data.csv <!-- END CSV TABLE -->
