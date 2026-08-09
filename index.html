@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض جدول CSV من المستودع</title>
+    <title>عرض جدول البيانات</title>
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; background-color: #f8f9fa; color: #333; }
         h2 { color: #2c3e50; margin-bottom: 20px; }
@@ -18,8 +18,8 @@
 </head>
 <body>
 
-    <h2>جدول البيانات المجلوب من المستودع</h2>
-    <div id="status">جاري تحميل ملف data.csv...</div>
+    <h2>الجدول المحفوظ في المستودع</h2>
+    <div id="status">جاري جلب ملف data.csv من المستودع...</div>
 
     <div class="table-container">
         <table id="csvTable" style="display: none;">
@@ -29,35 +29,35 @@
     </div>
 
     <script>
-        // اسم ملف CSV المخزن في المستودع
-        const csvFilePath = 'fl_criteria.csv';
+        // اسم ملف CSV المرفوع في المستودع
+        const fileName = 'data.csv';
 
-        // جلب الملف عند فتح الصفحة
-        fetch(csvFilePath)
+        // جلب الملف عبر دالة fetch
+        fetch(fileName)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('تعذر العثور على ملف data.csv في المستودع.');
+                    throw new Error('لم يتم العثور على ملف ' + fileName + ' في المستودع.');
                 }
                 return response.text();
             })
             .then(csvText => {
                 document.getElementById('status').style.display = 'none';
                 document.getElementById('csvTable').style.display = 'table';
-                generateTable(csvText);
+                buildTable(csvText);
             })
             .catch(error => {
                 document.getElementById('status').textContent = 'خطأ: ' + error.message;
                 document.getElementById('status').style.color = 'red';
             });
 
-        function generateTable(csvText) {
+        function buildTable(csvText) {
             const lines = csvText.trim().split('\n');
             const tableHead = document.getElementById('tableHead');
             const tableBody = document.getElementById('tableBody');
 
             if (lines.length === 0) return;
 
-            // إنشاء عناوين الأعمدة من الصف الأول
+            // الصف الأول يُستخرج منه العناوين
             const headers = lines[0].split(',');
             const headRow = document.createElement('tr');
             headers.forEach(header => {
@@ -67,7 +67,7 @@
             });
             tableHead.appendChild(headRow);
 
-            // إنشاء صفوف البيانات
+            // استخراج بقية الصفوف والبيانات
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
                 
