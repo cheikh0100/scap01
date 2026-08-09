@@ -2,18 +2,9 @@
 
 
 
-<!-- START data.csv TABLE -->                                    
+<!-- START CSV TABLE -->
 
 
 
 
-
-
-
-
-
-
-
-
-
-<!-- END data.csv TABLE -->
+<!-- END CSV TABLE -->
